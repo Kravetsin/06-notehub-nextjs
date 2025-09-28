@@ -1,0 +1,39 @@
+.main {
+  flex: 1;
+}
+
+/* Styles for Mobile devices */
+.container {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+/* Styles for Tablet devices */
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+}
+/* Styles for Desktop devices */
+@media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.description {
+  font-size: 18px;
+  color: #444444;
+  line-height: 28px;
+  margin-bottom: 16px;
+}
