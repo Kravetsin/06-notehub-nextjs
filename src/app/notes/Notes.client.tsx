@@ -1,53 +1,31 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import css from "./NotesPage.module.css";
+import { useDebounce } from "use-debounce";
+import { Toaster } from "react-hot-toast";
+import { useFetchNotes } from "@/lib/api";
 import NoteList from "@/components/NoteList/NoteList";
+import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Modal from "@/components/Modal/Modal";
-import { useFetchNotes } from "@/lib/api";
-import toast, { Toaster } from "react-hot-toast";
-import { useDebounce } from "use-debounce";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import Pagination from "@/components/Pagination/Pagination";
+import css from "./NotesPage.module.css";
 
-export default function App() {
-  //! 🔹 States
+export default function Notes() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [rawSearch, setRawSearch] = useState("");
-
-  //! 🔹 Debounced search
   const [debouncedSearch] = useDebounce(rawSearch, 300);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  //! 🔹 Modal
-  const closeModal = () => setIsModalOpen(false);
-  const openModal = () => setIsModalOpen(true);
-
-  //! 🔹 Notes Response
-  const { data, isSuccess, isLoading, isError } = useFetchNotes(
+  const { data, isLoading, isError } = useFetchNotes(
     currentPage,
     debouncedSearch
   );
 
-  //! 🔹 Reset page when search changes (only after debounce)
   useEffect(() => {
     setCurrentPage(1);
   }, [debouncedSearch]);
 
-  //! 🔹 Handle "no notes found"
-  useEffect(() => {
-    if (
-      isSuccess &&
-      data &&
-      Array.isArray(data.notes) &&
-      data.notes.length === 0
-    ) {
-      toast.error("No notes found.");
-    }
-  }, [isSuccess, data]);
-
-  //! 🔹 Render
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
@@ -59,18 +37,26 @@ export default function App() {
             onPageChange={setCurrentPage}
           />
         )}
-        <button onClick={openModal} className={css.button}>
+        <button onClick={() => setIsModalOpen(true)} className={css.button}>
           Create note +
         </button>
       </header>
-      {data && Array.isArray(data.notes) && data.notes.length > 0 && (
+
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error loading notes</p>}
+
+      {data?.notes?.length ? (
         <NoteList notes={data.notes} />
+      ) : (
+        <p>No notes found</p>
       )}
+
       {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <NoteForm onClose={closeModal} />
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm onClose={() => setIsModalOpen(false)} />
         </Modal>
       )}
+
       <Toaster />
     </div>
   );
