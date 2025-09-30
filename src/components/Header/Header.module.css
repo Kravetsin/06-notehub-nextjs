@@ -28,9 +28,15 @@
   gap: 1rem;
 }
 
-.navigation li a {
+.navigation li .active {
   text-decoration: none;
   color: white;
+  font-size: 1rem;
+}
+
+.navigation li .none_active {
+  text-decoration: none;
+  color: hsla(0, 0%, 100%, 0.5);
   font-size: 1rem;
 }
 
