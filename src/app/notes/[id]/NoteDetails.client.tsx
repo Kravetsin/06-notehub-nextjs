@@ -8,7 +8,7 @@ import { getSingleNote } from "@/lib/api";
 import css from "./NoteDetails.module.css";
 
 const NoteDetailsClient = () => {
-  const { id, title } = useParams<{ id: string; title: string }>();
+  const { id } = useParams<{ id: string }>();
 
   const {
     data: note,

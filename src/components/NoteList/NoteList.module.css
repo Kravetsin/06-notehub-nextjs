@@ -98,7 +98,6 @@
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  padding: 8px 16px;
   color: #0b5ed7;
 }
 
@@ -106,29 +105,28 @@
 .routerLink::after {
   content: "";
   position: absolute;
-  inset: 0;
-  border: 2px solid #0b5ed7;
-  transition: transform 0.3s ease-in-out;
+  width: 0;
+  height: 1px;
+  background-color: #0b5ed7;
+  transition: width 0.3s ease-in-out;
 }
 
 .routerLink::before {
-  border-left: none;
-  border-right: none;
-  transform: scaleX(0);
-  transform-origin: center;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
 }
 
 .routerLink::after {
-  border-top: none;
-  border-bottom: none;
-  transform: scaleY(0);
-  transform-origin: center;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 100%;
 }
 
 .routerLink:hover::before {
-  transform: scaleX(1);
+  width: 100%;
 }
 
 .routerLink:hover::after {
-  transform: scaleY(1);
+  width: 100%;
 }

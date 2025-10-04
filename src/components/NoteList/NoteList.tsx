@@ -33,12 +33,14 @@ export default function NoteList({ notes }: NoteListProps) {
     <ul className={css.list}>
       {notes.map((item) => (
         <li key={item.id} className={css.listItem}>
-          <Link className={css.routerLink} href={`/notes/${item.id}`}>
-            <h2 className={css.title}>{item.title}</h2>
-            <p className={css.content}>{item.content}</p>
-          </Link>
+          <h2 className={css.title}>{item.title}</h2>
+          <p className={css.content}>{item.content}</p>
+
           <div className={css.footer}>
             <span className={css.tag}>{item.tag}</span>
+            <Link className={css.routerLink} href={`/notes/${item.id}`}>
+              View details
+            </Link>
             <button
               onClick={() => handleDelete(item.id)}
               className={css.button}
