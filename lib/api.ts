@@ -5,7 +5,7 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
-// 🔹 Создаём axios-инстанс с базовыми настройками
+//! 🔹 Axios defaults
 const api = axios.create({
   baseURL: "https://notehub-public.goit.study/api",
   headers: {
@@ -14,7 +14,7 @@ const api = axios.create({
   },
 });
 
-// 🔹 Универсальный обработчик ошибок
+//! 🔹 Error notifications
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -30,9 +30,7 @@ type NotesResponse = {
   totalPages: number;
 };
 
-// ======================
-// 🔹 API-функции
-// ======================
+//! 🔹 API-функции
 export const fetchNotes = async (
   page: number,
   search: string
@@ -66,9 +64,7 @@ export const getSingleNote = async (id: string): Promise<Note> => {
   return data;
 };
 
-// ======================
-// 🔹 React Query hook
-// ======================
+//! 🔹 React Query hook
 export const useFetchNotes = (currentPage: number, search: string) => {
   return useQuery({
     queryKey: ["notes", currentPage, search],
